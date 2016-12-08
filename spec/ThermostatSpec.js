@@ -49,7 +49,20 @@ describe('Thermostat', function() {
     expect(thermostat.temperature).toEqual(20);
   });
 
+  it("returns low-usage when temperature at 17", function() {
+    thermostat.temperature = 17;
+    expect(thermostat.energyUsage()).toEqual("low-usage");
 
+  });
 
+  it("returns medium-usage when 20 degrees", function() {
+    thermostat.temperature = 20;
+    expect(thermostat.energyUsage()).toEqual("medium-usage");
+  });
+
+  it("returns high-usage", function() {
+    thermostat.temperature = 27;
+    expect(thermostat.energyUsage()).toEqual("high-usage");
+  });
 
 });
