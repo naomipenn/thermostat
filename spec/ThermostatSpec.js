@@ -9,7 +9,7 @@ describe('Thermostat', function() {
   });
 
   it("starts at 20 degrees", function() {
-    expect(thermostat.temperature).toEqual(20);
+    expect(thermostat.getCurrentTemperature()).toEqual(20);
   });
 
   it("has an up function that increases the temperature by 1", function(){
@@ -23,16 +23,16 @@ describe('Thermostat', function() {
   });
 
   it("has a min temperature of 10", function(){
-    expect(thermostat._minTemperature).toEqual(10);
+    expect(thermostat.MIN_TEMPERATURE).toEqual(10);
   });
 
   it("has a max temperature of 25", function(){
-    expect(thermostat._maxTemperature).toEqual(25);
+    expect(thermostat.maxTemperature).toEqual(25);
   });
 
   it("has a max temperature of 32 when power saving mode is off", function(){
     thermostat.changePowerSaveMode();
-    expect(thermostat._maxTemperature).toEqual(32);
+    expect(thermostat.maxTemperature).toEqual(32);
   });
 
   it("is in power saving mode by default", function(){
@@ -63,6 +63,20 @@ describe('Thermostat', function() {
   it("returns high-usage", function() {
     thermostat.temperature = 27;
     expect(thermostat.energyUsage()).toEqual("high-usage");
+  });
+
+  it("cannot exceed max temperature", function() {
+    for (var i = 0; i < 7; i++) {
+      thermostat.increase();
+    }
+    expect(thermostat.temperature).toEqual(25);
+  });
+
+  it("cannot go below min temperature", function() {
+    for(var i = 0; i < 11; i++){
+      thermostat.decrease();
+    }
+    expect(thermostat.temperature).toEqual(10);
   });
 
 });
