@@ -29,4 +29,10 @@ describe('Thermostat', function() {
   it("has a max temperature of 25", function(){
     expect(thermostat._maxTemperature).toEqual(25);
   });
+
+  it("has a max temperature of 32 when power saving mode is off", function(){
+    thermostat.turnPowerSavingOff();
+    expect(thermostat._maxTemperature).toEqual(32);
+  });
+
 });
