@@ -3,13 +3,14 @@ $( document ).ready(function() {
 
   refresh();
 
-  $('#select-city').submit(function(event) {
-    event.preventDefault();
-    var city = $('#current-city').val();
-    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=fe1adac7152aa9980cc789467d7ac0f7&units=metric', function(data) {
-      $('#current-temperature').text(data.main.temp);
-    })
-  })
+  // displayWeather('London');
+  //
+  // $('#select-city').submit(function(event) {
+  //   event.preventDefault();
+  //   var city = $('#current-city').val();
+  //   displayWeather(city);
+  // })
+  // })
 
   $("#temperature-up").click(function( event ) {
     thermostat.up()
@@ -48,5 +49,14 @@ $( document ).ready(function() {
     $("#psm-status").text(psmStatus());
     $("#psm-status").attr('class', psmStatus());
   }
+
+  // function displayWeather(city) {
+  //  var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city;
+  //  var token = '&appid=fe1adac7152aa9980cc789467d7ac0f7';
+  //  var units = '&units=metric';
+  //  $.get(url + token + units, function(data) {
+  //    $('#current-temperature').text(data.main.temp);
+  //  })
+
 
 });
