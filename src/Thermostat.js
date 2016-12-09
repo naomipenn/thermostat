@@ -1,46 +1,54 @@
-var Thermostat = function() {
+'use strict';
+
+function Thermostat() {
   this.temperature = 20;
-  this.MIN_TEMPERATURE = 10;
-  this.maxTemperature = 25;
-  this._isPowerSaveOn = true;
+  this.minimum = 10;
+  this.maximum = 25;
+  this.isInPowerSavingMode = true;
+}
 
-};
-
-Thermostat.prototype.getCurrentTemperature = function() {
-  return this.temperature;
-};
-
-
-Thermostat.prototype.increase = function() {
-  if(this.temperature < this.maxTemperature)
-  { return this.temperature += 1;}
-
-};
-
-Thermostat.prototype.decrease = function() {
-  if(this.temperature > this.MIN_TEMPERATURE)
-  { return this.temperature -= 1;}
-
-};
-
-Thermostat.prototype.changePowerSaveMode = function() {
-  if(this._isPowerSaveOn = true) {
-    this._isPowerSaveOn = false;
-      this.maxTemperature = 32;
+Thermostat.prototype.up = function() {
+  if (this.temperature >= this.maximum ) {
+    throw TypeError("At maximum temperature")
   } else {
-    this._isPowerSaveOn = true;
-    this.maxTemperature = 25;}
-};
+  this.temperature++;
+  }
+}
 
-Thermostat.prototype.reset = function() {
+Thermostat.prototype.down = function() {
+  if (this.temperature <= 10) {
+    throw TypeError("At minimum temperature")
+  } else {
+    this.temperature--
+  }
+}
+
+Thermostat.prototype.switchPowerSavingMode = function() {
+    this.isInPowerSavingMode = !this.isInPowerSavingMode;
+    this.switchMaximum();
+    if (this.temperature > this.maximum) {
+      this.temperature = this.maximum
+    }
+}
+
+Thermostat.prototype.switchMaximum = function() {
+  if (this.isInPowerSavingMode) {
+    this.maximum = 25;
+  } else {
+    this.maximum = 32;
+  }
+}
+
+Thermostat.prototype.resetTemperature = function() {
   this.temperature = 20;
-};
+}
 
-Thermostat.prototype.energyUsage = function() {
-  if(this.temperature < 18)
-    {return "low-usage";}
-  else if(this.temperature < 25)
-    {return "medium-usage";}
-  else
-    {return "high-usage";}
-};
+Thermostat.prototype.currentEnergyUsage = function() {
+  if (this.temperature < 18) {
+    return "low-usage";
+  } else if (this.temperature < 25) {
+    return "medium-usage";
+  } else {
+    return "high-usage";
+  }
+}

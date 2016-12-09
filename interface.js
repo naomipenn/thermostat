@@ -1,37 +1,44 @@
-$(document).ready(function() {
+$( document ).ready(function() {
   var thermostat = new Thermostat();
-  updateTemperature();
 
-$('#temp-up').on('click', function() {
-  thermostat.increase();
-  updateTemperature();
-});
+  refresh();
 
-$('#temp-down').click(function() {
-  thermostat.decrease();
-  updateTemperature();;
-});
+  $("#temperature-up").click(function( event ) {
+    thermostat.up()
+    refresh();
+  });
 
-$('#temp-reset').click(function() {
-  thermostat.reset();
-  updateTemperature();
-});
+  $("#temperature-down").click(function( event ) {
+    thermostat.down()
+    refresh();
+  });
 
-$('#psm-on').click(function() {
-  thermostat._isPowerSaveOn();
-  $('#power-saving').text('on')
-  updateTemperature();
-})
+  $("#temperature-reset").click(function( event ) {
+    thermostat.resetTemperature()
+    refresh();
+  });
 
-// $('#psm-off').click(function() {
-//   thermostat.powerSavingModeOff();
-//   $('#power-saving').text('off')
-//   updateTemperature();
-// })
+  $("#powersavingmode").click(function( event ) {
+    thermostat.switchPowerSavingMode();
+    refresh();
+  });
 
-function updateTemperature() {
-  $('#temperature').text(thermostat.temperature);
-  $('#temperature').attr('class', thermostat.energyUsage());
-};
+  $("#table").fadeIn(3000);
+
+  function psmStatus() {
+    if (thermostat.isInPowerSavingMode === true) {
+      return "On";
+    } else {
+      return "Off";
+    }
+  }
+
+  function refresh() {
+    $("#temperature").text(thermostat.temperature);
+    $("#energy-usage").text(thermostat.currentEnergyUsage());
+    $("#energy-usage").attr('class', thermostat.currentEnergyUsage());
+    $("#psm-status").text(psmStatus());
+    $("#psm-status").attr('class', psmStatus());
+  }
 
 });
