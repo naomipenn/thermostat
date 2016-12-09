@@ -3,6 +3,14 @@ $( document ).ready(function() {
 
   refresh();
 
+  $('#select-city').submit(function(event) {
+    event.preventDefault();
+    var city = $('#current-city').val();
+    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=fe1adac7152aa9980cc789467d7ac0f7&units=metric', function(data) {
+      $('#current-temperature').text(data.main.temp);
+    })
+  })
+
   $("#temperature-up").click(function( event ) {
     thermostat.up()
     refresh();
